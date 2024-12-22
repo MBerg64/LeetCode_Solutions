@@ -1,0 +1,25 @@
+class Solution {
+    public int countStudents(int[] students, int[] sandwiches) {
+        Queue<Integer> queue = new LinkedList<>();
+	    for (int student : students) {
+	        queue.add(student);
+	    }
+	    
+	    int sandwichIndex = 0;
+	    int rejectedStudents = 0;
+	    
+	    //runs through the students until the queue is empty or no students want the top sandwich
+	    while(!queue.isEmpty() && rejectedStudents < queue.size()) {
+	    	if(queue.peek() == sandwiches[sandwichIndex]) {
+	    		queue.poll(); //Java uses poll() instead of dequeue()
+	    		sandwichIndex++;
+	    		rejectedStudents = 0; //if student takes the sandwich, the count of rejected students resets
+	    	}
+	    	else {
+	    		queue.add(queue.poll());
+	    		rejectedStudents++;
+	    	}
+	    }
+	    return queue.size();
+    }
+}
